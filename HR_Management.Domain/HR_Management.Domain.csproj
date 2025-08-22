@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\LeaveRequestDTOs\" />
     <Folder Include="DTOs\LeaveAllocationDTOs\" />
   </ItemGroup>
 
