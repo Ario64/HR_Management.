@@ -15,4 +15,19 @@
     <ProjectReference Include="..\HR_Management.Domain\HR_Management.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\LeaveAllocation\Handler\Commands\" />
+    <Folder Include="Features\LeaveAllocation\Handler\Queries\" />
+    <Folder Include="Features\LeaveAllocation\Request\Commands\" />
+    <Folder Include="Features\LeaveAllocation\Request\Queries\" />
+    <Folder Include="Features\LeaveRequest\Handler\Commands\" />
+    <Folder Include="Features\LeaveRequest\Handler\Queries\" />
+    <Folder Include="Features\LeaveRequest\Request\Commands\" />
+    <Folder Include="Features\LeaveRequest\Request\Queries\" />
+    <Folder Include="Features\LeaveType\Handler\Commands\" />
+    <Folder Include="Features\LeaveType\Handler\Queries\" />
+    <Folder Include="Features\LeaveType\Request\Commands\" />
+    <Folder Include="Features\LeaveType\Request\Queries\" />
+  </ItemGroup>
+
 </Project>
