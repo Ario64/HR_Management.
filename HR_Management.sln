@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR_Management.Domain", "HR_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR_Management.Application", "HR_Management.Application\HR_Management.Application.csproj", "{5D021816-10E0-445B-8599-3639FF0ED400}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR_Management.Infrastructure", "HR_Management.Infrastructure\HR_Management.Infrastructure.csproj", "{BF745142-7F16-4F18-86B9-1A3663A816F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{5D021816-10E0-445B-8599-3639FF0ED400}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D021816-10E0-445B-8599-3639FF0ED400}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D021816-10E0-445B-8599-3639FF0ED400}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF745142-7F16-4F18-86B9-1A3663A816F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF745142-7F16-4F18-86B9-1A3663A816F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF745142-7F16-4F18-86B9-1A3663A816F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF745142-7F16-4F18-86B9-1A3663A816F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +53,7 @@ Global
 		{C0476C8E-3B21-40B8-BC58-74F0F08E1564} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A9BE68FE-F620-4405-B0CF-6D7E4ECA550B} = {D9E4492D-7CB2-41EF-B3A4-67C3AB478169}
 		{5D021816-10E0-445B-8599-3639FF0ED400} = {60FCC27A-2A3E-4A9E-BA2E-0888C476244E}
+		{BF745142-7F16-4F18-86B9-1A3663A816F7} = {CDEA58E1-3241-4B43-86E0-858CEDDCA1FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F0335950-7222-4B0D-9ECD-AF065E1C2129}
