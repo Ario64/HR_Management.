@@ -1,6 +1,8 @@
-﻿namespace HR_Management.Domain.DTOs.LeaveAllocationDTOs;
+﻿using HR_Management.Application.DTOs.LeaveAllocationDTOs;
 
-public record UpdateLeaveAllocationDto
+namespace HR_Management.Domain.DTOs.LeaveAllocationDTOs;
+
+public class UpdateLeaveAllocationDto : ILeaveAllocationDto
 {
     public int LeaveAllocationId { get; set; }
     public int LeaveTypeId { get; set; }

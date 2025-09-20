@@ -34,6 +34,12 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return entity;
     }
 
+    public async Task<bool> IsExist(object id, CancellationToken cancellationToken = default)
+    {
+        var entity = await _context.Set<T>().FindAsync(new[] { id }, cancellationToken);
+        return entity != null;
+    }
+
     public void Remove(T entity)
     {
         _context.Set<T>().Remove(entity);
