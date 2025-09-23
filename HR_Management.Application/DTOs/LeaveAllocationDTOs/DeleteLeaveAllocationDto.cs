@@ -1,6 +1,8 @@
-﻿namespace HR_Management.Domain.DTOs.LeaveAllocationDTOs;
+﻿using HR_Management.Application.DTOs.Common;
 
-public record DeleteLeaveAllocationDto
+namespace HR_Management.Domain.DTOs.LeaveAllocationDTOs;
+
+public class DeleteLeaveAllocationDto : BaseDto
 {
     public int LeaveAllocationId { get; set; }
 }

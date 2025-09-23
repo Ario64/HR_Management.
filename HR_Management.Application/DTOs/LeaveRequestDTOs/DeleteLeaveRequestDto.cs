@@ -1,6 +1,8 @@
-﻿namespace HR_Management.Domain.DTOs.LeaveRequestDTOs;
+﻿using HR_Management.Application.DTOs.Common;
 
-public record DeleteLeaveRequestDto
+namespace HR_Management.Domain.DTOs.LeaveRequestDTOs;
+
+public class DeleteLeaveRequestDto : BaseDto
 {
-    public int LeaveRequestId { get; set; }
+   
 }

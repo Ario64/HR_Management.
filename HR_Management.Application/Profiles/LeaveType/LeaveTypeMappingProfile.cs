@@ -9,7 +9,7 @@ public class LeaveTypeMappingProfile : Profile
     {
         CreateMap<HR_Management.Domain.Entities.LeaveType, LeaveTypeDto>();
         CreateMap<HR_Management.Domain.Entities.LeaveType, CreateLeaveTypeDto>().ReverseMap();
-        CreateMap<HR_Management.Domain.Entities.LeaveType, UpdateLeaveTypeDto>().ReverseMap();
+        CreateMap<HR_Management.Domain.Entities.LeaveType, EditLeaveTypeDto>().ReverseMap();
         CreateMap<HR_Management.Domain.Entities.LeaveType, DeleteLeaveTypeDto>().ReverseMap();
     }
 

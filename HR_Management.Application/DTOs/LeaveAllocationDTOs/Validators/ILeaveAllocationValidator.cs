@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using HR_Management.Application.UintOfWork;
-using HR_Management.Domain.DTOs.LeaveAllocationDTOs;
 using HR_Management.Domain.Entities;
 
 namespace HR_Management.Application.DTOs.LeaveAllocationDTOs.Validators;
@@ -26,7 +25,7 @@ public class ILeaveAllocationValidator : AbstractValidator<ILeaveAllocationDto>
                                    .WithMessage("{PropertyName} is required !")
                                    .MustAsync((id, token) =>
                                    {
-                                       var leaveAllocation = _unitOfWork.GenericRepository<LeaveAllocation>().IsExist(id);
+                                       var leaveAllocation = _unitOfWork.GenericRepository<LeaveType>().IsExist(id);
                                        return leaveAllocation;
                                    })
                                    .WithMessage("{PropertyName} does not exist !");

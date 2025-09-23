@@ -1,6 +1,9 @@
-﻿namespace HR_Management.Domain.DTOs.LeaveRequestDTOs;
+﻿using HR_Management.Application.DTOs.Common;
+using HR_Management.Application.DTOs.LeaveRequestDTOs;
 
-public record LeaveRequestDto
+namespace HR_Management.Domain.DTOs.LeaveRequestDTOs;
+
+public class LeaveRequestDto : BaseDto, ILeaveRequestDto
 {
     public int LeaveRequestId { get; set; }
     public int LeaveTypeId { get; set; }
