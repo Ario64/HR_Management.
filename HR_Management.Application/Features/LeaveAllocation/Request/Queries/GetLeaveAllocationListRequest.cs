@@ -3,6 +3,6 @@ using MediatR;
 
 namespace HR_Management.Application.Features.LeaveAllocation.Request.Queries;
 
-public record GetLeaveAllocationRequest(int id) : IRequest<LeaveAllocationDto>
+public record GetLeaveAllocationListRequest : IRequest<IReadOnlyList<LeaveAllocationDto>>
 {
 }

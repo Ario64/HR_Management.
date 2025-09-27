@@ -9,7 +9,7 @@ public class LeaveAllocationMappingProfile : Profile
     {
         CreateMap<HR_Management.Domain.Entities.LeaveAllocation, LeaveAllocationDto>();
         CreateMap<HR_Management.Domain.Entities.LeaveAllocation, CreateLeaveAllocationDto>().ReverseMap();
-        CreateMap<HR_Management.Domain.Entities.LeaveAllocation, UpdateLeaveAllocationDto>().ReverseMap();
+        CreateMap<HR_Management.Domain.Entities.LeaveAllocation, EditLeaveAllocationDto>().ReverseMap();
         CreateMap<HR_Management.Domain.Entities.LeaveAllocation, DeleteLeaveAllocationDto>().ReverseMap();
     }
 }

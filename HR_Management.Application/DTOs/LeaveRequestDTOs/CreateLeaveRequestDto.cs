@@ -1,6 +1,8 @@
-﻿namespace HR_Management.Domain.DTOs.LeaveRequestDTOs;
+﻿using HR_Management.Application.DTOs.LeaveRequestDTOs;
 
-public record CreateLeaveRequestDto
+namespace HR_Management.Domain.DTOs.LeaveRequestDTOs;
+
+public record CreateLeaveRequestDto : ILeaveRequestDto
 {
     public int LeaveTypeId { get; set; }
     public DateTime StartDate { get; set; }

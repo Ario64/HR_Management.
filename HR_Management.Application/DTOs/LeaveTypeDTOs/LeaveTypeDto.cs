@@ -1,6 +1,8 @@
-﻿namespace HR_Management.Domain.DTOs.LeaveTypeDTOs;
+﻿using HR_Management.Application.DTOs.LeaveTypeDTOs;
 
-public record LeaveTypeDto
+namespace HR_Management.Domain.DTOs.LeaveTypeDTOs;
+
+public record LeaveTypeDto : ILeaveTypeDto
 {
     public required string LeaveTypeTitle { get; set; }
     public int DefaultDays { get; set; }

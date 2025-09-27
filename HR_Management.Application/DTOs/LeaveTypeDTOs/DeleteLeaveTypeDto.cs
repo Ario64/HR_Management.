@@ -1,6 +1,7 @@
-﻿namespace HR_Management.Domain.DTOs.LeaveTypeDTOs;
+﻿using HR_Management.Application.DTOs.Common;
 
-public record DeleteLeaveTypeDto
+namespace HR_Management.Domain.DTOs.LeaveTypeDTOs;
+
+public class DeleteLeaveTypeDto : BaseDto
 {
-    public int LeaveTypeId { get; set; }
 }
