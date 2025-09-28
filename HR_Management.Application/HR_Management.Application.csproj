@@ -18,9 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Features\LeaveRequest\Handler\Commands\" />
-    <Folder Include="Features\LeaveRequest\Handler\Queries\" />
     <Folder Include="Features\LeaveRequest\Request\Commands\" />
-    <Folder Include="Features\LeaveRequest\Request\Queries\" />
     <Folder Include="Features\LeaveType\Handler\Commands\" />
     <Folder Include="Features\LeaveType\Handler\Queries\" />
     <Folder Include="Features\LeaveType\Request\Commands\" />

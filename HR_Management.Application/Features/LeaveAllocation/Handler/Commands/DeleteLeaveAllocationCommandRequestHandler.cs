@@ -23,9 +23,10 @@ public class DeleteLeaveAllocationCommandRequestHandler : IRequestHandler<Delete
 
         if (leaveAllocation != null)
         {
-             _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveAllocation>()
-                                                        .Remove(leaveAllocation);
+            _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveAllocation>()
+                                                       .Remove(leaveAllocation);
         }
 
         return true;
+    }
 }
