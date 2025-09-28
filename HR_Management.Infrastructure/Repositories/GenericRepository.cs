@@ -24,7 +24,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task<IReadOnlyList<T>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var entities = await _context.Set<T>().ToListAsync(cancellationToken);
+        var entities = await _context.Set<T>().AsNoTracking().ToListAsync(cancellationToken);
         return entities;
     }
 
