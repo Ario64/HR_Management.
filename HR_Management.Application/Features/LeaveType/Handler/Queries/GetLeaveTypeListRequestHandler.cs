@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HR_Management.Application.Exceptions;
 using HR_Management.Application.Features.LeaveType.Request.Queries;
 using HR_Management.Application.UintOfWork;
 using HR_Management.Domain.DTOs.LeaveTypeDTOs;
@@ -21,6 +22,11 @@ public class GetLeaveTypeListRequestHandler : IRequestHandler<GetLeaveTypeListRe
     {
         var leaveTypeList = await _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveType>()
                                              .GetAllAsync(cancellationToken);
+
+        if (leaveTypeList == null) 
+        {
+            throw new ListNullException();
+        }
 
         var mappedLeaveTypeList = _mapper.Map<IReadOnlyList<LeaveTypeDto>>(leaveTypeList);
 

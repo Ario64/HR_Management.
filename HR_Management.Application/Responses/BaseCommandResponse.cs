@@ -3,7 +3,7 @@
 public class BaseCommandResponse
 {
     public int Id { get; set; }
-    public bool sSuccessd { get; set; }
+    public bool IsSuccessd { get; set; }
     public string? Message { get; set; }
     public List<string>? Errors { get; set; }
 }

@@ -21,12 +21,14 @@ public class EditLeaveAllocationCommandRequestHandler : IRequestHandler<EditLeav
         var leaveAllocation = await _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveAllocation>()
                                                .GetByIdAsync(request.id, cancellationToken);
 
-        if (leaveAllocation != null)
+        if (leaveAllocation == null)
         {
-            _mapper.Map(leaveAllocation, request.EditLeaveAllocationDto);
-            _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveAllocation>().Update(leaveAllocation);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+           return false;
         }
+
+        _mapper.Map(leaveAllocation, request.EditLeaveAllocationDto);
+        _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveAllocation>().Update(leaveAllocation);
+        await _unitOfWork.SaveChangesAsync(cancellationToken); 
 
         return true;
     }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HR_Management.Application.Exceptions;
 using HR_Management.Application.Features.LeaveType.Request.Queries;
 using HR_Management.Application.UintOfWork;
 using HR_Management.Domain.DTOs.LeaveTypeDTOs;
@@ -21,6 +22,11 @@ public class GetLeaveTypeRequestHandler : IRequestHandler<GetLeaveTypeRequest, L
     {
         var leaveType = await _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveType>()
                                          .GetByIdAsync(request.id, cancellationToken);
+
+        if (leaveType == null)
+        {
+            throw new NotFoundException(nameof(HR_Management.Domain.Entities.LeaveType), request.id);
+        }
 
         var mappedLeaveType = _mapper.Map<LeaveTypeDto>(leaveType);
         return mappedLeaveType;

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HR_Management.Application.Exceptions;
 using HR_Management.Application.Features.LeaveRequest.Request.Commands;
 using HR_Management.Application.UintOfWork;
 using MediatR;
@@ -20,6 +21,11 @@ public class EditLeaveRequestCommandRequestHandler : IRequestHandler<EditLeaveRe
     {
         var leaveRequest = await _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveRequest>()
                                             .GetByIdAsync(request.EditLeaveRequestDto.Id, cancellationToken);
+
+        if (leaveRequest == null)
+        {
+            throw new NotFoundException(nameof(LeaveRequest), request.EditLeaveRequestDto.Id);
+        }
 
         _mapper.Map(request.EditLeaveRequestDto, leaveRequest);
         _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveRequest>().Update(leaveRequest!);

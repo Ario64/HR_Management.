@@ -2,6 +2,7 @@
 using HR_Management.Application.Features.LeaveAllocation.Request.Queries;
 using HR_Management.Application.UintOfWork;
 using HR_Management.Domain.DTOs.LeaveAllocationDTOs;
+using HR_Management.Domain.Entities;
 using MediatR;
 
 namespace HR_Management.Application.Features.LeaveAllocation.Handler.Queries;
@@ -21,8 +22,12 @@ public class GetLeaveAllocationListRequestHandler : IRequestHandler<GetLeaveAllo
         var leaveAllocationList = await _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveAllocation>()
                                                    .GetAllAsync(cancellationToken);
 
-        var mappedLeaveAllocationList = _mapper.Map<IReadOnlyList<LeaveAllocationDto>>(leaveAllocationList);
+        if (leaveAllocationList == null)
+        {
+            return new List<LeaveAllocationDto>();
+        }
 
+        var mappedLeaveAllocationList = _mapper.Map<IReadOnlyList<LeaveAllocationDto>>(leaveAllocationList);
         return mappedLeaveAllocationList;
     }
 }

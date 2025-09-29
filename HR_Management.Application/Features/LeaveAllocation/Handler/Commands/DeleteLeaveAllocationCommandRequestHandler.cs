@@ -21,11 +21,13 @@ public class DeleteLeaveAllocationCommandRequestHandler : IRequestHandler<Delete
         var leaveAllocation = await _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveAllocation>()
                                                .GetByIdAsync(request.id, cancellationToken);
 
-        if (leaveAllocation != null)
+        if (leaveAllocation == null)
         {
-            _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveAllocation>()
-                                                       .Remove(leaveAllocation);
+            return false;
         }
+
+        _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveAllocation>()
+                                                   .Remove(leaveAllocation);
 
         return true;
     }
