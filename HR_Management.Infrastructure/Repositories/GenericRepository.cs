@@ -24,7 +24,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task<IReadOnlyList<T>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var entities = await _context.Set<T>().AsNoTracking().ToListAsync(cancellationToken);
+        var entities = await _context.Set<T>().AsNoTracking()
+                                              .ToListAsync(cancellationToken);
         return entities;
     }
 
@@ -34,9 +35,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return entity;
     }
 
-    public async Task<bool> IsExist(object id, CancellationToken cancellationToken = default)
+    public async Task<bool> IsExist(int id, CancellationToken cancellationToken = default)
     {
-        var entity = await _context.Set<T>().FindAsync(new[] { id }, cancellationToken);
+        var entity = await GetByIdAsync(id, cancellationToken);
         return entity != null;
     }
 

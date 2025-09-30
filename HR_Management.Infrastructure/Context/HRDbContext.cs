@@ -22,7 +22,6 @@ public class HRDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(HRDbContext).Assembly);
-
     }
 
     #endregion
