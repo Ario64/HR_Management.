@@ -2,21 +2,18 @@
 using HR_Management.Application.DTOs.LeaveRequestDTOs.Validators;
 using HR_Management.Application.Exceptions;
 using HR_Management.Application.Features.LeaveRequest.Request.Commands;
+using HR_Management.Application.Infrastructure.Services.EmailService;
+using HR_Management.Application.Models;
 using HR_Management.Application.UintOfWork;
 using MediatR;
 
 namespace HR_Management.Application.Features.LeaveRequest.Handler.Commands;
 
-public class CreateLeaveRequestCommandRequestHandler : IRequestHandler<CreateLeaveRequestCommandRequest, bool>
+public class CreateLeaveRequestCommandRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, IEmailSender sender) : IRequestHandler<CreateLeaveRequestCommandRequest, bool>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public CreateLeaveRequestCommandRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly IMapper _mapper = mapper;
+    private readonly IEmailSender _sender = sender;
 
     public async Task<bool> Handle(CreateLeaveRequestCommandRequest request, CancellationToken cancellationToken)
     {
@@ -32,6 +29,15 @@ public class CreateLeaveRequestCommandRequestHandler : IRequestHandler<CreateLea
 
         _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveRequest>().Add(mappedLeaveRequest);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        var email = new Email() 
+        {
+             To = "shahrokhi20@yahoo.com",
+             Subject = "Leave Request Created",
+             Body = $"Your leave request from {request.CreateLeaveRequestDto.StartDate} to {request.CreateLeaveRequestDto.EndDate} has been approved."
+        };
+        await _sender.SendEmailAsync(email);
+
         return true;
     }
 }
