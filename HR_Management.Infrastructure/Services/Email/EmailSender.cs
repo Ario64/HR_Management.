@@ -1,9 +1,9 @@
 ﻿using HR_Management.Application.Infrastructure.Services.EmailService;
 using HR_Management.Application.Models;
 using Microsoft.Extensions.Options;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using System.Net;
+using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 
 namespace HR_Management.Infrastructure.Services.Email;
 
@@ -18,13 +18,18 @@ public class EmailSender : IEmailSender
 
     public async Task<bool> SendEmailAsync(Application.Models.Email email)
     {
-        var client = new SendGridClient(_emailSetting.ApiKey);
-        var to = new EmailAddress(email.To);
-        var from = new EmailAddress(_emailSetting.SenderAddress, _emailSetting.SenderName);
-        var msg = MailHelper.CreateSingleEmail(from, to, email.Subject, email.Body, email.Body);
-        var response = await client.SendEmailAsync(msg);
+        var message = new MimeMessage();
+        message.From.Add(new MailboxAddress( _emailSetting.SenderName, _emailSetting.SenderAddress));
+        message.To.Add(MailboxAddress.Parse(email.To));
+       message.Subject = email.Subject;
+        message.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = email.Body };
 
-        return response.StatusCode == HttpStatusCode.OK ||
-               response.StatusCode == HttpStatusCode.Accepted;
+        var client = new SmtpClient();
+        await client.ConnectAsync(_emailSetting.MailServer, _emailSetting.MailPort, SecureSocketOptions.StartTls);
+        await client.AuthenticateAsync(_emailSetting.SenderAddress, _emailSetting.SenderPassword);
+        await client.SendAsync(message);
+        await client.DisconnectAsync(true);
+
+        return true;    
     }
 }
