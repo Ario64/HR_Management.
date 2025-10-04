@@ -1,5 +1,6 @@
 using HR_Management.Application;
 using HR_Management.Infrastructure;
+using System.Reflection;
 
 namespace HR_Management.Presentation;
 
@@ -20,6 +21,18 @@ public class Program
         builder.Services.ConfigureApplicationServices();
         builder.Services.ConfigureInfrastructureServices(builder.Configuration);
 
+        //Add corse
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+        });
+
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -33,6 +46,7 @@ public class Program
 
         app.UseAuthorization();
 
+        app.UseCors("AllowAll");
 
         app.MapControllers();
 
