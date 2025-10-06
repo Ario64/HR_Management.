@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HR_Management.Application.DTOs.LeaveTypeDTOs.Validators;
 using HR_Management.Application.Exceptions;
 using HR_Management.Application.Features.LeaveType.Request.Commands;
 using HR_Management.Application.UintOfWork;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace HR_Management.Application.Features.LeaveType.Handler.Commands;
 
-public class EditLeaveTypeCommandRequestHandler : IRequestHandler<EditLeaveTypeCommandRequest, bool>
+public class EditLeaveTypeCommandRequestHandler : IRequestHandler<EditLeaveTypeCommandRequest, Unit>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -17,8 +18,16 @@ public class EditLeaveTypeCommandRequestHandler : IRequestHandler<EditLeaveTypeC
         _mapper = mapper;
     }
 
-    public async Task<bool> Handle(EditLeaveTypeCommandRequest request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(EditLeaveTypeCommandRequest request, CancellationToken cancellationToken)
     {
+        var validator = new EditLeaveTypeDtoValidator();
+        var validationResult = await validator.ValidateAsync(request.EditLeaveTypeDto, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException(validationResult);
+        }
+
         var leaveType = await _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveType>()
                                          .GetByIdAsync(request.EditLeaveTypeDto.Id, cancellationToken);
 
@@ -30,6 +39,6 @@ public class EditLeaveTypeCommandRequestHandler : IRequestHandler<EditLeaveTypeC
         _mapper.Map(request.EditLeaveTypeDto, leaveType);
         _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveType>().Update(leaveType);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return true;
+        return Unit.Value;
     }
 }

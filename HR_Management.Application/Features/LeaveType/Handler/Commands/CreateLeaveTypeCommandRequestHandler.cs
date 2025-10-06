@@ -3,22 +3,17 @@ using HR_Management.Application.DTOs.LeaveTypeDTOs.Validators;
 using HR_Management.Application.Exceptions;
 using HR_Management.Application.Features.LeaveType.Request.Commands;
 using HR_Management.Application.UintOfWork;
+using HR_Management.Domain.DTOs.LeaveTypeDTOs;
 using MediatR;
 
 namespace HR_Management.Application.Features.LeaveType.Handler.Commands;
 
-public class CreateLeaveTypeCommandRequestHandler : IRequestHandler<CreateLeaveTypeCommandRequest, bool>
+public class CreateLeaveTypeCommandRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateLeaveTypeCommandRequest, LeaveTypeDto>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly IMapper _mapper = mapper;
 
-    public CreateLeaveTypeCommandRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
-
-    public async Task<bool> Handle(CreateLeaveTypeCommandRequest request, CancellationToken cancellationToken)
+    public async Task<LeaveTypeDto> Handle(CreateLeaveTypeCommandRequest request, CancellationToken cancellationToken)
     {
         var validator = new CreateLeaveTypeDtoValidator();
         var validationResult = await validator.ValidateAsync(request.CreateLeaveTypeDto, cancellationToken);
@@ -31,6 +26,6 @@ public class CreateLeaveTypeCommandRequestHandler : IRequestHandler<CreateLeaveT
         var mappedLeaveType = _mapper.Map<HR_Management.Domain.Entities.LeaveType>(request.CreateLeaveTypeDto);
         _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveType>().Add(mappedLeaveType);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return true;
+        return _mapper.Map<LeaveTypeDto>(mappedLeaveType);
     }
 }
