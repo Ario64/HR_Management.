@@ -1,4 +1,4 @@
-﻿namespace HR_Management.Application.Models;
+﻿namespace HR_Management.Application.Hatoeas;
 
 public class EmailSetting
 {

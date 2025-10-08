@@ -27,7 +27,7 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
             Id = leaveType.Id,
             LeaveTypeTitle = leaveType.LeaveTypeTitle,
             DefaultDays = leaveType.DefaultDays,
-            Links = linkBuilder.BuildLink(leaveType.Id).ToList(),
+            Links = linkBuilder.BuildLinkForList(leaveType.Id).ToList(),
         }).ToList();
 
         return Ok(resources);
@@ -38,7 +38,17 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<LeaveTypeDto>> Get(int id)
     {
         var leaveType = await _mediator.Send(new GetLeaveTypeRequest(id));
-        return Ok(leaveType);
+        var linkBuilder = new LinkBuilder(Url);
+
+        var resource = new LeaveTypeResource
+        {
+            Id = leaveType.Id,
+            LeaveTypeTitle = leaveType.LeaveTypeTitle,
+            DefaultDays = leaveType.DefaultDays,
+            Links = linkBuilder.BuildLinkForItem(leaveType.Id)
+        };
+
+        return Ok(resource);
     }
 
     // POST api/<LeaveTypeController>
@@ -49,7 +59,17 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
             return BadRequest(ModelState);
 
         var leaveType = await _mediator.Send(new CreateLeaveTypeCommandRequest(model));
-        return CreatedAtAction(nameof(Get), new { id = leaveType.Id }, leaveType);
+        var linkBuilder = new LinkBuilder(Url);
+
+        var resource = new LeaveTypeResource
+        {
+            Id = leaveType.Id,
+            LeaveTypeTitle = leaveType.LeaveTypeTitle,
+            DefaultDays = leaveType.DefaultDays,
+            Links = linkBuilder.BuildLinkAfterCreate(leaveType.Id)
+        };
+
+        return CreatedAtAction(nameof(Get), new { id = leaveType.Id }, resource);
     }
 
     // PUT api/<LeaveTypeController>/5
@@ -64,7 +84,17 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
             return BadRequest(ModelState);
 
         await _mediator.Send(new EditLeaveTypeCommandRequest(model));
-        return NoContent();
+        var linkBuilder = new LinkBuilder(Url);
+
+        var resource = new LeaveTypeResource
+        {
+            Id = model.Id,
+            LeaveTypeTitle = model.LeaveTypeTitle,
+            DefaultDays = model.DefaultDays,
+            Links = linkBuilder.BuildLinkAfterUpdate(model.Id)
+        };
+
+        return Ok(resource);
     }
 
     // DELETE api/<LeaveTypeController>/5
@@ -74,7 +104,11 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
         if (id == 0)
             return BadRequest("Invalid ID");
 
+        var linkBuilder = new LinkBuilder(Url);
+
+        var resources = linkBuilder.BuildLinkAfterDelete();
         await _mediator.Send(new DeleteLeaveTypeCommandRequest(id));
-        return NoContent();
+
+        return Ok(resources);
     }
 }

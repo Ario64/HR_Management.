@@ -3,7 +3,7 @@ using HR_Management.Application.DTOs.LeaveRequestDTOs.Validators;
 using HR_Management.Application.Exceptions;
 using HR_Management.Application.Features.LeaveRequest.Request.Commands;
 using HR_Management.Application.Infrastructure.Services.EmailService;
-using HR_Management.Application.Models;
+using HR_Management.Application.Hatoeas;
 using HR_Management.Application.UintOfWork;
 using MediatR;
 

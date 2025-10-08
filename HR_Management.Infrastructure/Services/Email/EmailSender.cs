@@ -1,5 +1,5 @@
 ﻿using HR_Management.Application.Infrastructure.Services.EmailService;
-using HR_Management.Application.Models;
+using HR_Management.Application.Hatoeas;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MailKit.Net.Smtp;
@@ -16,7 +16,7 @@ public class EmailSender : IEmailSender
         _emailSetting = emailSetting.Value;
     }
 
-    public async Task<bool> SendEmailAsync(Application.Models.Email email)
+    public async Task<bool> SendEmailAsync(Application.Hatoeas.Email email)
     {
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress( _emailSetting.SenderName, _emailSetting.SenderAddress));

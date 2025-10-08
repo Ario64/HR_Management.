@@ -1,5 +1,5 @@
 ﻿using HR_Management.Application.Infrastructure.Services.EmailService;
-using HR_Management.Application.Models;
+using HR_Management.Application.Hatoeas;
 using HR_Management.Application.UintOfWork;
 using HR_Management.Domain.Repositories;
 using HR_Management.Infrastructure.Context;

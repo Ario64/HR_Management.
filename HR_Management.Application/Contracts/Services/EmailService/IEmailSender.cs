@@ -1,4 +1,4 @@
-﻿using HR_Management.Application.Models;
+﻿using HR_Management.Application.Hatoeas;
 
 namespace HR_Management.Application.Infrastructure.Services.EmailService;
 
