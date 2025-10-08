@@ -5,7 +5,7 @@ namespace HR_Management.Domain.DTOs.LeaveRequestDTOs;
 
 public class LeaveRequestDto : BaseDto, ILeaveRequestDto
 {
-    public int LeaveRequestId { get; set; }
+    //public int LeaveRequestId { get; set; }
     public int LeaveTypeId { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }

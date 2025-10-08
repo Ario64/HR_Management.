@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using HR_Management.Application.Exceptions;
-using HR_Management.Application.Features.LeaveRequest.Request.Queries;
+using HR_Management.Application.Features.LeaveRequest.Handler.Queries;
 using HR_Management.Application.UintOfWork;
 using HR_Management.Domain.DTOs.LeaveRequestDTOs;
 using MediatR;

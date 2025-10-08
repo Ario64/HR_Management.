@@ -24,7 +24,6 @@ public class LinkBuilder
         };
     }
 
- 
     //Links for get single item
     public List<Link> BuildLinkForItem(int id)
     {

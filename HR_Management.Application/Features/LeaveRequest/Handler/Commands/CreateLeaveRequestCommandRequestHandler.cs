@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using HR_Management.Application.DTOs.LeaveRequestDTOs.Validators;
 using HR_Management.Application.Exceptions;
-using HR_Management.Application.Features.LeaveRequest.Request.Commands;
+using HR_Management.Application.Features.LeaveRequest.Handler.Commands;
 using HR_Management.Application.Infrastructure.Services.EmailService;
 using HR_Management.Application.Hatoeas;
 using HR_Management.Application.UintOfWork;
@@ -9,13 +9,13 @@ using MediatR;
 
 namespace HR_Management.Application.Features.LeaveRequest.Handler.Commands;
 
-public class CreateLeaveRequestCommandRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, IEmailSender sender) : IRequestHandler<CreateLeaveRequestCommandRequest, bool>
+public class CreateLeaveRequestCommandRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, IEmailSender sender) : IRequestHandler<CreateLeaveRequestCommandRequest, int>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
     private readonly IEmailSender _sender = sender;
 
-    public async Task<bool> Handle(CreateLeaveRequestCommandRequest request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateLeaveRequestCommandRequest request, CancellationToken cancellationToken)
     {
         var validator = new CreateLeaveRequestDtoValidator(_unitOfWork);
         var validationResult = await validator.ValidateAsync(request.CreateLeaveRequestDto, cancellationToken);
@@ -38,6 +38,6 @@ public class CreateLeaveRequestCommandRequestHandler(IUnitOfWork unitOfWork, IMa
         };
         await _sender.SendEmailAsync(email);
 
-        return true;
+        return mappedLeaveRequest.Id;
     }
 }
