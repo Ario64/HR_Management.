@@ -1,6 +1,8 @@
 ﻿using HR_Management.Application.Features.LeaveType.Request.Commands;
 using HR_Management.Application.Features.LeaveType.Request.Queries;
 using HR_Management.Domain.DTOs.LeaveTypeDTOs;
+using HR_Management.Presentation.Hatoeas;
+using HR_Management.Presentation.Models.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,8 +19,18 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<LeaveTypeDto>>> Get()
     {
-        var lravrTypeList = await _mediator.Send(new GetLeaveTypeListRequest());
-        return Ok(lravrTypeList);
+        var leaveTypeList = await _mediator.Send(new GetLeaveTypeListRequest());
+        var linkBuilder = new LinkBuilder(Url);
+
+        var resources = leaveTypeList.Select(leaveType => new LeaveTypeResource
+        {
+            Id = leaveType.Id,
+            LeaveTypeTitle = leaveType.LeaveTypeTitle,
+            DefaultDays = leaveType.DefaultDays,
+            Links = linkBuilder.BuildLink(leaveType.Id).ToList(),
+        }).ToList();
+
+        return Ok(resources);
     }
 
     // GET api/<LeaveTypeController>/5
@@ -42,7 +54,7 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
 
     // PUT api/<LeaveTypeController>/5
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id,[FromBody] EditLeaveTypeDto model)
+    public async Task<ActionResult> Put(int id, [FromBody] EditLeaveTypeDto model)
     {
 
         if (id != model.Id)
