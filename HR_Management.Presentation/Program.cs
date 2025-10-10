@@ -20,6 +20,7 @@ public class Program
         //IoC
         builder.Services.ConfigureApplicationServices();
         builder.Services.ConfigureInfrastructureServices(builder.Configuration);
+        builder.Services.AddHttpContextAccessor();
 
         //Add corse
         builder.Services.AddCors(options =>

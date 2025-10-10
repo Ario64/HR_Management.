@@ -2,20 +2,21 @@
 using HR_Management.Application.DTOs.LeaveRequestDTOs.Validators;
 using HR_Management.Application.Exceptions;
 using HR_Management.Application.Features.LeaveRequest.Handler.Commands;
-using HR_Management.Application.Infrastructure.Services.EmailService;
 using HR_Management.Application.Hatoeas;
+using HR_Management.Application.Infrastructure.Services.EmailService;
 using HR_Management.Application.UintOfWork;
+using HR_Management.Domain.DTOs.LeaveRequestDTOs;
 using MediatR;
 
 namespace HR_Management.Application.Features.LeaveRequest.Handler.Commands;
 
-public class CreateLeaveRequestCommandRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, IEmailSender sender) : IRequestHandler<CreateLeaveRequestCommandRequest, int>
+public class CreateLeaveRequestCommandRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, IEmailSender sender) : IRequestHandler<CreateLeaveRequestCommandRequest, LeaveRequestDto>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
     private readonly IEmailSender _sender = sender;
 
-    public async Task<int> Handle(CreateLeaveRequestCommandRequest request, CancellationToken cancellationToken)
+    public async Task<LeaveRequestDto> Handle(CreateLeaveRequestCommandRequest request, CancellationToken cancellationToken)
     {
         var validator = new CreateLeaveRequestDtoValidator(_unitOfWork);
         var validationResult = await validator.ValidateAsync(request.CreateLeaveRequestDto, cancellationToken);
@@ -30,6 +31,8 @@ public class CreateLeaveRequestCommandRequestHandler(IUnitOfWork unitOfWork, IMa
         _unitOfWork.GenericRepository<HR_Management.Domain.Entities.LeaveRequest>().Add(mappedLeaveRequest);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+        var mappedLeaveRequestDto = _mapper.Map<LeaveRequestDto>(mappedLeaveRequest);
+
         var email = new Email() 
         {
              To = "shahrokhi20@yahoo.com",
@@ -38,6 +41,6 @@ public class CreateLeaveRequestCommandRequestHandler(IUnitOfWork unitOfWork, IMa
         };
         await _sender.SendEmailAsync(email);
 
-        return mappedLeaveRequest.Id;
+        return mappedLeaveRequestDto;
     }
 }

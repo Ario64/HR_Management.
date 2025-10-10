@@ -11,16 +11,23 @@ namespace HR_Management.Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class LeaveTypeController(IMediator mediator) : ControllerBase
+public class LeaveTypeController : ControllerBase
 {
-    private readonly IMediator _mediator = mediator;
+    private readonly IMediator _mediator;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public LeaveTypeController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
+    {
+        _mediator = mediator;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
     // GET: api/<LeaveTypeController>
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<LeaveTypeDto>>> Get()
     {
         var leaveTypeList = await _mediator.Send(new GetLeaveTypeListRequest());
-        var linkBuilder = new LinkBuilder(Url);
+        var linkBuilder = new LinkBuilder(Url,_httpContextAccessor);
 
         var resources = leaveTypeList.Select(leaveType => new LeaveTypeResource
         {
@@ -38,7 +45,7 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<LeaveTypeDto>> Get(int id)
     {
         var leaveType = await _mediator.Send(new GetLeaveTypeRequest(id));
-        var linkBuilder = new LinkBuilder(Url);
+        var linkBuilder = new LinkBuilder(Url, _httpContextAccessor);
 
         var resource = new LeaveTypeResource
         {
@@ -59,7 +66,7 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
             return BadRequest(ModelState);
 
         var leaveType = await _mediator.Send(new CreateLeaveTypeCommandRequest(model));
-        var linkBuilder = new LinkBuilder(Url);
+        var linkBuilder = new LinkBuilder(Url, _httpContextAccessor);
 
         var resource = new LeaveTypeResource
         {
@@ -84,7 +91,7 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
             return BadRequest(ModelState);
 
         await _mediator.Send(new EditLeaveTypeCommandRequest(model));
-        var linkBuilder = new LinkBuilder(Url);
+        var linkBuilder = new LinkBuilder(Url, _httpContextAccessor);
 
         var resource = new LeaveTypeResource
         {
@@ -104,7 +111,7 @@ public class LeaveTypeController(IMediator mediator) : ControllerBase
         if (id == 0)
             return BadRequest("Invalid ID");
 
-        var linkBuilder = new LinkBuilder(Url);
+        var linkBuilder = new LinkBuilder(Url, _httpContextAccessor);
 
         var resources = linkBuilder.BuildLinkAfterDelete();
         await _mediator.Send(new DeleteLeaveTypeCommandRequest(id));

@@ -3,6 +3,6 @@ using MediatR;
 
 namespace HR_Management.Application.Features.LeaveRequest.Handler.Commands;
 
-public record CreateLeaveRequestCommandRequest(CreateLeaveRequestDto CreateLeaveRequestDto) : IRequest<int>
+public record CreateLeaveRequestCommandRequest(CreateLeaveRequestDto CreateLeaveRequestDto) : IRequest<LeaveRequestDto>
 {
 }

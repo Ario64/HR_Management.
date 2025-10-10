@@ -12,16 +12,23 @@ namespace HR_Management.Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class LeaveRequestController(IMediator mediator) : ControllerBase
+public class LeaveRequestController : ControllerBase
 {
-    private readonly IMediator _mediator = mediator;
+    private readonly IMediator _mediator;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public LeaveRequestController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
+    {
+        _mediator = mediator;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
     // GET: api/<LeaveRequestController>
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<LeaveRequestDto>>> Get()
     {
         var leaveRequestList = await _mediator.Send(new GetLeaveRequestListRequest());
-        var linkBuilder = new LinkBuilder(Url);
+        var linkBuilder = new LinkBuilder(Url, _httpContextAccessor);
 
         var resources = leaveRequestList.Select(leaveRequest => new LeaveRequestResource
         {
@@ -45,7 +52,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> Get(int id)
     {
         var leaveRequest = await _mediator.Send(new GetLeaveRequestRequest(id));
-        var linkbuilder = new LinkBuilder(Url);
+        var linkbuilder = new LinkBuilder(Url, _httpContextAccessor);
 
         var resource = new LeaveRequestResource
         {
@@ -71,8 +78,8 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var createdLeaveRequestId = await _mediator.Send(new CreateLeaveRequestCommandRequest(model));
-        var linkbuilder = new LinkBuilder(Url);
+        var createdLeaveRequest = await _mediator.Send(new CreateLeaveRequestCommandRequest(model));
+        var linkbuilder = new LinkBuilder(Url, _httpContextAccessor);
 
         var resource = new LeaveRequestResource
         {
@@ -84,16 +91,35 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
             LeaveTypeId = model.LeaveTypeId,
             RequestComment = model.RequestComment,
             StartDate = model.StartDate,
-            Links = linkbuilder.BuildLinkAfterCreate(createdLeaveRequestId).ToList()
+            Links = linkbuilder.BuildLinkAfterCreate(createdLeaveRequest.Id).ToList()
         };
 
-        return Ok(resource);
+        return CreatedAtAction("Get", new {id = createdLeaveRequest.Id }, createdLeaveRequest);
     }
 
     // PUT api/<LeaveRequestController>/5
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public async Task<ActionResult> Put(int id, [FromBody] EditLeaveRequestDto model)
     {
+        if (id == 0 || id != model.Id)
+            return NotFound();
+
+        var leaveRequest = await _mediator.Send(new GetLeaveRequestRequest(id));
+        var linkbuilder = new LinkBuilder(Url, _httpContextAccessor);
+
+        var resource = new LeaveRequestResource()
+        {
+            ActionDate = model.ActionDate,
+           DateRequest = model.DateRequest,
+           EndDate = model.EndDate,
+           LeaveTypeId = model.LeaveTypeId,
+           RequestComment = model.RequestComment,
+           StartDate = model.StartDate,
+           Links = linkbuilder.BuildLinkAfterUpdate(id)
+        };
+         
+
+        return Accepted();
     }
 
     // DELETE api/<LeaveRequestController>/5
