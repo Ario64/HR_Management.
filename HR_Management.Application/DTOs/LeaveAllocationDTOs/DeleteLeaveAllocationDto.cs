@@ -2,7 +2,7 @@
 
 namespace HR_Management.Domain.DTOs.LeaveAllocationDTOs;
 
-public class DeleteLeaveAllocationDto : BaseDto
+public record DeleteLeaveAllocationDto : BaseDto
 {
     public int LeaveAllocationId { get; set; }
 }

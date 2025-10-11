@@ -3,7 +3,7 @@ using HR_Management.Application.DTOs.LeaveAllocationDTOs;
 
 namespace HR_Management.Domain.DTOs.LeaveAllocationDTOs;
 
-public class EditLeaveAllocationDto : BaseDto, ILeaveAllocationDto
+public record EditLeaveAllocationDto : BaseDto, ILeaveAllocationDto
 {
     public int LeaveAllocationId { get; set; }
     public int LeaveTypeId { get; set; }

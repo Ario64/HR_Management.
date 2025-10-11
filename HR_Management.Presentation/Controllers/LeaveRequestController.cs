@@ -1,4 +1,5 @@
 ﻿using HR_Management.Application.DTOs.Resources;
+using HR_Management.Application.Features.LeaveAllocation.Request.Commands;
 using HR_Management.Application.Features.LeaveRequest.Handler.Commands;
 using HR_Management.Application.Features.LeaveRequest.Handler.Queries;
 using HR_Management.Domain.DTOs.LeaveRequestDTOs;
@@ -28,8 +29,7 @@ public class LeaveRequestController : ControllerBase
     public async Task<ActionResult<IReadOnlyList<LeaveRequestDto>>> Get()
     {
         var leaveRequestList = await _mediator.Send(new GetLeaveRequestListRequest());
-        var linkBuilder = new LinkBuilder(Url, _httpContextAccessor);
-
+        var linkBuilder = new LinkBuilder<LeaveRequestController>(Url, _httpContextAccessor);
         var resources = leaveRequestList.Select(leaveRequest => new LeaveRequestResource
         {
             Id = leaveRequest.Id,
@@ -52,8 +52,7 @@ public class LeaveRequestController : ControllerBase
     public async Task<ActionResult> Get(int id)
     {
         var leaveRequest = await _mediator.Send(new GetLeaveRequestRequest(id));
-        var linkbuilder = new LinkBuilder(Url, _httpContextAccessor);
-
+        var linkbuilder = new LinkBuilder<LeaveRequestController>(Url, _httpContextAccessor);
         var resource = new LeaveRequestResource
         {
             Id = leaveRequest.Id,
@@ -79,8 +78,7 @@ public class LeaveRequestController : ControllerBase
             return BadRequest(ModelState);
 
         var createdLeaveRequest = await _mediator.Send(new CreateLeaveRequestCommandRequest(model));
-        var linkbuilder = new LinkBuilder(Url, _httpContextAccessor);
-
+        var linkbuilder = new LinkBuilder<LeaveRequestController>(Url, _httpContextAccessor);
         var resource = new LeaveRequestResource
         {
             ActionDate = model.ActionDate,
@@ -94,7 +92,7 @@ public class LeaveRequestController : ControllerBase
             Links = linkbuilder.BuildLinkAfterCreate(createdLeaveRequest.Id).ToList()
         };
 
-        return CreatedAtAction("Get", new {id = createdLeaveRequest.Id }, createdLeaveRequest);
+        return CreatedAtAction("Get", new { id = createdLeaveRequest.Id }, createdLeaveRequest);
     }
 
     // PUT api/<LeaveRequestController>/5
@@ -104,27 +102,31 @@ public class LeaveRequestController : ControllerBase
         if (id == 0 || id != model.Id)
             return NotFound();
 
-        var leaveRequest = await _mediator.Send(new GetLeaveRequestRequest(id));
-        var linkbuilder = new LinkBuilder(Url, _httpContextAccessor);
-
+        await _mediator.Send(new GetLeaveRequestRequest(id));
+        var linkbuilder = new LinkBuilder<LeaveRequestController>(Url, _httpContextAccessor);
         var resource = new LeaveRequestResource()
         {
             ActionDate = model.ActionDate,
-           DateRequest = model.DateRequest,
-           EndDate = model.EndDate,
-           LeaveTypeId = model.LeaveTypeId,
-           RequestComment = model.RequestComment,
-           StartDate = model.StartDate,
-           Links = linkbuilder.BuildLinkAfterUpdate(id)
+            DateRequest = model.DateRequest,
+            EndDate = model.EndDate,
+            LeaveTypeId = model.LeaveTypeId,
+            RequestComment = model.RequestComment,
+            StartDate = model.StartDate,
+            Links = linkbuilder.BuildLinkAfterUpdate(id)
         };
-         
-
-        return Accepted();
+        return Ok(resource);
     }
 
     // DELETE api/<LeaveRequestController>/5
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public async Task<ActionResult> Delete(int id)
     {
+        if (id == 0)
+            return BadRequest("Invalid Id!");
+
+        await _mediator.Send(new DeleteLeaveAllocationCommandRequest(id));
+        var linkBuilder = new LinkBuilder<LeaveAllocationController>(Url, _httpContextAccessor);
+        var resource = linkBuilder.BuildLinkAfterDelete();
+        return Ok(resource);
     }
 }

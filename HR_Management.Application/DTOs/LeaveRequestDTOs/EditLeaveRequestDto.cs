@@ -3,7 +3,7 @@ using HR_Management.Application.DTOs.LeaveRequestDTOs;
 
 namespace HR_Management.Domain.DTOs.LeaveRequestDTOs;
 
-public class EditLeaveRequestDto :BaseDto, ILeaveRequestDto
+public record EditLeaveRequestDto :BaseDto, ILeaveRequestDto
 {
     public int LeaveTypeId { get; set; }
     public DateTime StartDate { get; set; }

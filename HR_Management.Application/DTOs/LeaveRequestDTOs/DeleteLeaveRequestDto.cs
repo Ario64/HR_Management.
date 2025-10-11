@@ -2,7 +2,7 @@
 
 namespace HR_Management.Domain.DTOs.LeaveRequestDTOs;
 
-public class DeleteLeaveRequestDto : BaseDto
+public record DeleteLeaveRequestDto : BaseDto
 {
    
 }

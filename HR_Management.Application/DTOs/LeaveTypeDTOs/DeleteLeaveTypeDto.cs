@@ -2,6 +2,6 @@
 
 namespace HR_Management.Domain.DTOs.LeaveTypeDTOs;
 
-public class DeleteLeaveTypeDto : BaseDto
+public record DeleteLeaveTypeDto : BaseDto
 {
 }

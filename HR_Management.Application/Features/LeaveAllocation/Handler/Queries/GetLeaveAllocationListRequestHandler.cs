@@ -2,7 +2,6 @@
 using HR_Management.Application.Features.LeaveAllocation.Request.Queries;
 using HR_Management.Application.UintOfWork;
 using HR_Management.Domain.DTOs.LeaveAllocationDTOs;
-using HR_Management.Domain.Entities;
 using MediatR;
 
 namespace HR_Management.Application.Features.LeaveAllocation.Handler.Queries;
