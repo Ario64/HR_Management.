@@ -118,4 +118,5 @@ public class LeaveAllocationController : ControllerBase
         var resourse = linkBuilder.BuildLinkAfterDelete().ToList();
         return Ok(resourse);
     }
+
 }

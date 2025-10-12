@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR_Management.Presentation", "HR_Management.Presentation\HR_Management.Presentation.csproj", "{9CCC5950-FA3F-43D0-8DFD-36E8D5910B2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR_Management.MVC", "HR_Management.MVC\HR_Management.MVC.csproj", "{80B9AE02-87E5-431E-9F34-17AC6B444A7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{9CCC5950-FA3F-43D0-8DFD-36E8D5910B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CCC5950-FA3F-43D0-8DFD-36E8D5910B2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CCC5950-FA3F-43D0-8DFD-36E8D5910B2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80B9AE02-87E5-431E-9F34-17AC6B444A7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80B9AE02-87E5-431E-9F34-17AC6B444A7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80B9AE02-87E5-431E-9F34-17AC6B444A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80B9AE02-87E5-431E-9F34-17AC6B444A7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{E1965ACD-DF64-418D-96EF-57A8624198FB} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A471E111-397A-493C-8BF1-5C0E69AF1F3D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{9CCC5950-FA3F-43D0-8DFD-36E8D5910B2E} = {A471E111-397A-493C-8BF1-5C0E69AF1F3D}
+		{80B9AE02-87E5-431E-9F34-17AC6B444A7F} = {A471E111-397A-493C-8BF1-5C0E69AF1F3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F0335950-7222-4B0D-9ECD-AF065E1C2129}
