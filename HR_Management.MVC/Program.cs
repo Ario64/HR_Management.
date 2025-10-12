@@ -1,3 +1,5 @@
+using HR_Management.MVC.Contracts;
+using HR_Management.MVC.Services;
 using HR_Management.MVC.Services.Base;
 
 namespace HR_Management.MVC
@@ -15,6 +17,7 @@ namespace HR_Management.MVC
             {
                 cnf.BaseAddress = new Uri(builder.Configuration.GetSection("ApiAddress").Value!);
             });
+            builder.Services.AddSingleton<ILocalStorageService, LocalStorageService>();
 
             var app = builder.Build();
 
