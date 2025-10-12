@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{E1965ACD-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A471E111-397A-493C-8BF1-5C0E69AF1F3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR_Management.Presentation", "HR_Management.Presentation\HR_Management.Presentation.csproj", "{9CCC5950-FA3F-43D0-8DFD-36E8D5910B2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR_Management.Api", "HR_Management.Presentation\HR_Management.Api.csproj", "{9CCC5950-FA3F-43D0-8DFD-36E8D5910B2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR_Management.MVC", "HR_Management.MVC\HR_Management.MVC.csproj", "{80B9AE02-87E5-431E-9F34-17AC6B444A7F}"
 EndProject
