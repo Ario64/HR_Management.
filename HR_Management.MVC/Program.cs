@@ -1,3 +1,5 @@
+using HR_Management.MVC.Services.Base;
+
 namespace HR_Management.MVC
 {
     public class Program
@@ -8,6 +10,11 @@ namespace HR_Management.MVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpClient<IClient, Client>(
+                cnf =>
+            {
+                cnf.BaseAddress = new Uri(builder.Configuration.GetSection("ApiAddress").Value!);
+            });
 
             var app = builder.Build();
 
