@@ -1,4 +1,5 @@
-﻿using HR_Management.Domain.DTOs.LeaveTypeDTOs;
+﻿using HR_Management.Application.Responses;
+using HR_Management.Domain.DTOs.LeaveTypeDTOs;
 using MediatR;
 
 namespace HR_Management.Application.Features.LeaveType.Request.Commands;

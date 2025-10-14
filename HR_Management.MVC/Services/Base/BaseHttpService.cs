@@ -1,11 +1,13 @@
-﻿namespace HR_Management.MVC.Services.Base;
+﻿using HR_Management.MVC.Contracts;
+
+namespace HR_Management.MVC.Services.Base;
 
 public class BaseHttpService
 {
-    protected readonly LocalStorageService _storageService;
+    protected readonly ILocalStorageService _storageService;
     protected readonly IClient _client;
 
-    public BaseHttpService(IClient client, LocalStorageService storageService)
+    public BaseHttpService(IClient client, ILocalStorageService storageService)
     {
         _storageService = storageService;
         _client = client;

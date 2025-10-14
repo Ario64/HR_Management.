@@ -60,7 +60,7 @@ public class LeaveTypeController : ControllerBase
 
     // POST api/<LeaveTypeController>
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] CreateLeaveTypeDto model)
+    public async Task<ActionResult<LeaveTypeResource>> Post([FromBody] CreateLeaveTypeDto model)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

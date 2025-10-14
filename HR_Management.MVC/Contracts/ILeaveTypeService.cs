@@ -8,6 +8,6 @@ public interface ILeaveTypeService
     Task<List<LeaveTypeViewModel>> GetLeaveTypesAsync();
     Task<LeaveTypeViewModel> GetLeaveTypeDetailsAsync(int id);
     Task<Response<int>> CreateLeaveTypeAsync(CreateLeaveTypeViewModel leaveType);
-    Task UpdateLeaveType(LeaveTypeViewModel leaveType);
-    Task DeleteLeaveType(LeaveTypeViewModel leaveType);
+    Task<Response<int>> UpdateLeaveType(int id, LeaveTypeViewModel leaveType);
+    Task<Response<int>> DeleteLeaveType(int id);
 }

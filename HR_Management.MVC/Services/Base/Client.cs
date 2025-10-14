@@ -1,13 +1,12 @@
-﻿namespace HR_Management.MVC.Services.Base
+﻿namespace HR_Management.MVC.Services.Base;
+
+public partial class Client : IClient
 {
-    public partial class Client : IClient
+    public HttpClient HttpClient 
     {
-        public HttpClient HttpClient 
+        get
         {
-            get
-            {
-                return _httpClient;
-            }
+            return _httpClient;
         }
     }
 }
