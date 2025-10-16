@@ -8,7 +8,7 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<LeaveTypeDto, LeaveTypeViewModel>();
-        CreateMap<CreateLeaveTypeDto, CreateLeaveTypeViewModel>();
+        CreateMap<LeaveTypeDto, LeaveTypeViewModel>().ReverseMap();
+        CreateMap<CreateLeaveTypeDto, CreateLeaveTypeViewModel>().ReverseMap();
     }
 }
