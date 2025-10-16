@@ -1,0 +1,11 @@
+﻿namespace HR_Management.MVC.Models;
+
+public class LeaveAllocationViewModel
+{
+    public int Id { get; set; }
+    public int NumberOfDays { get; set; }
+    public int LeaveTypeId { get; set; }
+    public string EmployeeId { get; set; } = string.Empty;
+    public string EmployeeName { get; set; } = string.Empty;
+    public int Period { get; set; }
+}

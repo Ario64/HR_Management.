@@ -6,7 +6,7 @@ public record CreateLeaveTypeViewModel
 {
     [Required]
     [Display(Name = "Leave Type Name")]
-    public required string Name { get; set; }
+    public required string LeaveTypeTitle { get; set; }
 
     [Required]
     [Display(Name = "Default Days")]

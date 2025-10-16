@@ -1,4 +1,5 @@
 using HR_Management.MVC.Contracts;
+using HR_Management.MVC.Profiles;
 using HR_Management.MVC.Services;
 using HR_Management.MVC.Services.Base;
 
@@ -12,12 +13,25 @@ namespace HR_Management.MVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddHttpClient<IClient, Client>(
-                cnf =>
-            {
-                cnf.BaseAddress = new Uri(builder.Configuration.GetSection("ApiAddress").Value!);
-            });
+
+            // Configure the API client with the base address from appsettings.json
+            var apiAddress = builder.Configuration.GetValue<string>("ApiAddress");
+            if (string.IsNullOrWhiteSpace(apiAddress))
+                throw new InvalidOperationException("ApiAddress is not configured in appsettings.json.");
+
+            builder.Services.AddHttpClient<IClient, Client>()
+                .ConfigureHttpClient(client =>
+                {
+                    client.BaseAddress = new Uri(apiAddress);
+                })
+                .AddTypedClient<IClient>((httpClient, serviceProvider) =>
+                {
+                    return new Client(apiAddress, httpClient);
+                });
+
             builder.Services.AddSingleton<ILocalStorageService, LocalStorageService>();
+            builder.Services.AddScoped<ILeaveTypeService, LeaveTypeService>();
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             var app = builder.Build();
 

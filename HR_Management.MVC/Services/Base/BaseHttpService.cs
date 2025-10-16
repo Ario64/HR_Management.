@@ -13,11 +13,11 @@ public class BaseHttpService
         _client = client;
     }
 
-    protected Response<Guid> ConvertApiExceptions<Guid>(ApiException exception)
+    protected Response<T> ConvertApiExceptions<T>(ApiException exception)
     {
         if (exception.StatusCode == 400)
         {
-            return new Response<Guid>
+            return new Response<T>
             {
                 Message = "Validation errors occured !",
                 Success = false
@@ -25,7 +25,7 @@ public class BaseHttpService
         }
         else if (exception.StatusCode == 404)
         {
-            return new Response<Guid>
+            return new Response<T>
             {
                 Message = "Resource not found !",
                 Success = false
@@ -33,7 +33,7 @@ public class BaseHttpService
         }
         else
         {
-            return new Response<Guid>
+            return new Response<T>
             {
                 Message = "Something went wrong, please try again !",
                 Success = false
