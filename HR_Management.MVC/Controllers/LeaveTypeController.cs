@@ -2,12 +2,15 @@
 using HR_Management.MVC.Models;
 using HR_Management.MVC.Services.Base;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace HR_Management.MVC.Controllers
 {
     public class LeaveTypeController : Controller
     {
         private readonly ILeaveTypeService _service;
+
+        // Constructor
         public LeaveTypeController(ILeaveTypeService service)
         {
             _service = service;
@@ -57,45 +60,63 @@ namespace HR_Management.MVC.Controllers
         }
 
         // GET: LeaveTypeController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var leaveType = await _service.GetLeaveTypeDetailsAsync(id);
+            return View(leaveType);
         }
 
         // POST: LeaveTypeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, LeaveTypeViewModel model)
         {
+            if (id == 0 || id != model.Id)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid ID !");
+                return View(model);
+            }
+
             try
             {
+                var leaveType = await _service.GetLeaveTypeDetailsAsync(id);
+                leaveType.DefaultDays = model.DefaultDays;
+                leaveType.LeaveTypeTitle = model.LeaveTypeTitle;
+                await _service.UpdateLeaveType(model.Id, leaveType);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
+
+            return View(model);
         }
 
         // GET: LeaveTypeController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var leaveType = await _service.GetLeaveTypeDetailsAsync(id);
+            return View(leaveType);
         }
 
         // POST: LeaveTypeController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> ConfirmDelete(int id)
         {
+            var leaveType = await _service.GetLeaveTypeDetailsAsync(id);
             try
             {
+                await _service.DeleteLeaveType(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
+
+            return View(leaveType);
         }
     }
 }
