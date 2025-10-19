@@ -1,8 +1,6 @@
 ﻿using HR_Management.MVC.Contracts;
 using HR_Management.MVC.Models;
-using HR_Management.MVC.Services.Base;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace HR_Management.MVC.Controllers
 {
@@ -49,7 +47,7 @@ namespace HR_Management.MVC.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                ModelState.AddModelError(string.Empty, "something went wrong !");
+                ModelState.AddModelError(string.Empty, "Validation error !");
             }
             catch (Exception ex)
             {
@@ -79,13 +77,13 @@ namespace HR_Management.MVC.Controllers
 
             try
             {
-                var leaveType = await _service.GetLeaveTypeDetailsAsync(id);
-                leaveType.DefaultDays = model.DefaultDays;
-                leaveType.LeaveTypeTitle = model.LeaveTypeTitle;
-                await _service.UpdateLeaveType(model.Id, leaveType);
-                return RedirectToAction(nameof(Index));
+                var response = await _service.UpdateLeaveType(id, model);
+                if (response.Success)
+                    return RedirectToAction(nameof(Index));
+
+                ModelState.AddModelError(string.Empty, "Validation error !");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
@@ -96,27 +94,41 @@ namespace HR_Management.MVC.Controllers
         // GET: LeaveTypeController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var leaveType = await _service.GetLeaveTypeDetailsAsync(id);
-            return View(leaveType);
-        }
-
-        // POST: LeaveTypeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ConfirmDelete(int id)
-        {
-            var leaveType = await _service.GetLeaveTypeDetailsAsync(id);
             try
             {
-                await _service.DeleteLeaveType(id);
-                return RedirectToAction(nameof(Index));
+                var response = await _service.DeleteLeaveType(id);
+                if (response.Success)
+                    return RedirectToAction(nameof(Index));
+
+                ModelState.AddModelError(string.Empty, "Validation error !");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
 
-            return View(leaveType);
+            return BadRequest();
         }
+
+        //// POST: LeaveTypeController/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> ConfirmDelete(int id)
+        //{
+        //    try
+        //    {
+        //        var response = await _service.DeleteLeaveType(id);
+        //        if (response.Success)
+        //            return RedirectToAction(nameof(Index));
+
+        //        ModelState.AddModelError(string.Empty, "Validation error !");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ModelState.AddModelError(string.Empty, ex.Message);
+        //    }
+
+        //    return BadRequest();
+        //}
     }
 }
