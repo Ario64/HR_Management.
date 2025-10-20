@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using HR_Management.Application.Contracts.EmailService;
 using HR_Management.Application.DTOs.LeaveRequestDTOs.Validators;
 using HR_Management.Application.Exceptions;
 using HR_Management.Application.Hatoeas;
-using HR_Management.Application.Infrastructure.Services.EmailService;
 using HR_Management.Application.UintOfWork;
 using HR_Management.Domain.DTOs.LeaveRequestDTOs;
 using MediatR;

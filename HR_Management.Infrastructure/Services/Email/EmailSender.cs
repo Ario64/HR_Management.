@@ -1,9 +1,9 @@
-﻿using HR_Management.Application.Infrastructure.Services.EmailService;
-using HR_Management.Application.Hatoeas;
+﻿using HR_Management.Application.Hatoeas;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using HR_Management.Application.Contracts.EmailService;
 
 namespace HR_Management.Infrastructure.Services.Email;
 

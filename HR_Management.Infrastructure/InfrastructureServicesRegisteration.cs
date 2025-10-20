@@ -1,5 +1,4 @@
-﻿using HR_Management.Application.Infrastructure.Services.EmailService;
-using HR_Management.Application.Hatoeas;
+﻿using HR_Management.Application.Hatoeas;
 using HR_Management.Application.UintOfWork;
 using HR_Management.Domain.Repositories;
 using HR_Management.Infrastructure.Context;
@@ -8,6 +7,7 @@ using HR_Management.Infrastructure.Services.Email;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using HR_Management.Application.Contracts.EmailService;
 
 namespace HR_Management.Infrastructure;
 
