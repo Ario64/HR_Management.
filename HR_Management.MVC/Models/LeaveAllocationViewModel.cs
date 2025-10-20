@@ -1,6 +1,6 @@
 ﻿namespace HR_Management.MVC.Models;
 
-public class LeaveAllocationViewModel
+public record LeaveAllocationViewModel
 {
     public int Id { get; set; }
     public int NumberOfDays { get; set; }

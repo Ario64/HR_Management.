@@ -1,4 +1,5 @@
-﻿using HR_Management.MVC.Contracts;
+﻿using AutoMapper;
+using HR_Management.MVC.Contracts;
 using HR_Management.MVC.Models;
 using HR_Management.MVC.Services.Base;
 
@@ -17,7 +18,7 @@ public class LeaveAllocationService : BaseHttpService, ILeaveAllocationService
         try
         {
             var response = new Response<int>();
-            var createLeaveAllocationDto = _mapper.Map<LeaveAllocationDto>(leaveAllocation);
+            var createLeaveAllocationDto = _mapper.Map<CreateLeaveAllocationDto>(leaveAllocation);
             var apiResponse = await _client.LeaveAllocationPOSTAsync(createLeaveAllocationDto);
             if (apiResponse != null)
             {
@@ -67,20 +68,10 @@ public class LeaveAllocationService : BaseHttpService, ILeaveAllocationService
 
     public async Task<Response<int>> UpdateLeaveAllocation(int id, LeaveAllocationViewModel leaveAllocation)
     {
-        try {
-            var response = new Response<int>();
-            var leaveAllocationDto = _mapper.Map<LeaveAllocationDto>(leaveAllocation);
-            var apiResponse = await _client.LeaveAllocationPUTAsync(id, leaveAllocationDto);
-            if(apiResponse != null)
-            {
-                response.Success = true;
-                response.Data = apiResponse.id;
-                response.Message = "Leave Allocation Updated successfully.";
-            }
-        }
-        catch(ApiException ex)
-        {
-            return ConvertApiExceptions<int>(ex);
-        }
+        var response = new Response<int>();
+        var leaveAllocationDto = _mapper.Map<EditLeaveAllocationDto>(leaveAllocation);
+        await _client.LeaveAllocationPUTAsync(id, leaveAllocationDto);
+        response.Success = true;
+        return response;
     }
 }

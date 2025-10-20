@@ -8,10 +8,16 @@ using MediatR;
 
 namespace HR_Management.Application.Features.LeaveType.Handler.Commands;
 
-public class CreateLeaveTypeCommandRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateLeaveTypeCommandRequest, LeaveTypeDto>
+public class CreateLeaveTypeCommandRequestHandler : IRequestHandler<CreateLeaveTypeCommandRequest, LeaveTypeDto>
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
-    private readonly IMapper _mapper = mapper;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
+
+    public CreateLeaveTypeCommandRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    {
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
+    }
 
     public async Task<LeaveTypeDto> Handle(CreateLeaveTypeCommandRequest request, CancellationToken cancellationToken)
     {

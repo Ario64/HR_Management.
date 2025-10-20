@@ -6,26 +6,32 @@ using System.Collections.Concurrent;
 
 namespace HR_Management.Infrastructure.UnitOfWork;
 
-public class UnitOfWork(HRDbContext context) : IUnitOfWork, IDisposable
+public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly ConcurrentDictionary<Type, object> _dictionary = new();
+    private readonly HRDbContext _context;
+
+    public UnitOfWork(HRDbContext context)
+    {
+        _context = context;
+    }
 
     public IGenericRepository<T> GenericRepository<T>() where T : class
     {
-        return (IGenericRepository<T>)_dictionary.GetOrAdd(typeof(T), _ = new GenericRepository<T>(context));
+        return (IGenericRepository<T>)_dictionary.GetOrAdd(typeof(T), _ = new GenericRepository<T>(_context));
     }
 
     public void SaveChanges()
     {
-        context.SaveChanges();
+        _context.SaveChanges();
     }
 
     public Task SaveChangesAsync(CancellationToken cancellationToken)
-        => context.SaveChangesAsync(cancellationToken);
+        => _context.SaveChangesAsync(cancellationToken);
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 
 }
