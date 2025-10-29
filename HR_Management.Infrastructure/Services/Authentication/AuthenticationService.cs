@@ -80,9 +80,9 @@ public class AuthenticationService : IAuthenticationService
             AuthResponse response = new AuthResponse()
             {
                 Id = user.Id,
-                Email = user.Email,
+                Email = user.Email!,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                UserName = user.UserName
+                UserName = user.UserName!
             };
 
             return response;
@@ -103,9 +103,9 @@ public class AuthenticationService : IAuthenticationService
 
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+            new Claim(JwtRegisteredClaimNames.Sub, user.UserName!),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
             new Claim(CustomClaimTypes.Uid, user.Id)
         }.Union(userClaims)
         .Union(roleClaims);

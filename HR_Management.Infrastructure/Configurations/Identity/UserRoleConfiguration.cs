@@ -7,6 +7,8 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<IdentityUserRole<s
 {
     public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<IdentityUserRole<string>> builder)
     {
+        builder.HasKey(k => new { k.UserId, k.RoleId });
+
         builder.HasData(
             new IdentityUserRole<string>
             {
