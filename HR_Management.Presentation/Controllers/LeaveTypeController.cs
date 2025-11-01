@@ -4,6 +4,7 @@ using HR_Management.Domain.DTOs.LeaveTypeDTOs;
 using HR_Management.Presentation.Hatoeas;
 using HR_Management.Presentation.Models.Resources;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -11,6 +12,7 @@ namespace HR_Management.Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+//[Authorize]
 public class LeaveTypeController : ControllerBase
 {
     private readonly IMediator _mediator;

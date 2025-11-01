@@ -23,14 +23,14 @@ public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
                 EmailConfirmed = true
             }
             , new ApplicationUser
-             {
-                 Id = "c4e81b39-6f21-4b5d-9c48-9f08e73fbb65",
-                 Email = "shahrokhi20@yahoo.com",
-                 UserName = "ario90",
-                 LastName = "Shahrokhi",
-                 FirstName = "Mozhgan",
-                 PasswordHash = passwordHasher.HashPassword(null, "Gh1038339sh@"),
-                 EmailConfirmed = true
-             });
+            {
+                Id = "c4e81b39-6f21-4b5d-9c48-9f08e73fbb65",
+                Email = "shahrokhi20@yahoo.com",
+                UserName = "ario90",
+                LastName = "Shahrokhi",
+                FirstName = "Mozhgan",
+                PasswordHash = passwordHasher.HashPassword(null, "Gh1038339sh@"),
+                EmailConfirmed = true
+            });
     }
 }

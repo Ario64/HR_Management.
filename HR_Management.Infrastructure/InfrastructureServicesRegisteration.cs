@@ -38,7 +38,7 @@ public static class InfrastructureServicesRegisteration
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
         services.AddDbContext<LeaveManagementIdentityDbContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("HRConnectionString"),
+            options.UseSqlServer(configuration.GetConnectionString("IdentityConnectionString"),
             b => b.MigrationsAssembly(typeof(LeaveManagementIdentityDbContext).Assembly.FullName));
         });
 
